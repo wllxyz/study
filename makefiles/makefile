@@ -8,23 +8,23 @@
 #--------------------------------------
 #DEBUG flag to control "-g -pg" option
 #0-- to disable, 1-- to enable
-DEBUG=1
+#DEBUG=1
 #--------------------------------------
 #to set the default compiler, default use c++
-GCC=c++
-AR=ar
+GCC=g++
+#AR=ar
 #--------------------------------------
 #here you can set your customer macros defined for compiler
-DEFINE_OPTION=-DDEBUG 
+#DEFINE_OPTION=-DDEBUG 
 #GLOBAL_OPTION=-std=c++11
 STATIC_LINK=1
 #--------------------------------------
 #you can add the third part lib's include directories here, lib's developed by yourself should linked in "sub" directory
-INCLUDE_OPTION=
+#INCLUDE_OPTION=
 #--------------------------------------
 #you can add the third part lib's lib directories here, lib's developed by yourself should linked in "sub" directory
-LIB_OPTION=-lpthread -lrt
+#LIB_OPTION=-lstdc++
 #--------------------------------------
-install_dir=$(FBASE_HOME)/linux.i386
+#install_dir=$(FBASE_HOME)/linux.i386
 #--------------------------------------
 include makefile.linux

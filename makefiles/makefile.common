@@ -37,15 +37,22 @@ DEPEND_INCLUDE_OPTION=$(foreach MODULE,$(DEPEND_MODULES),$(shell make --no-print
 DEPEND_LIB_OPTION=$(foreach MODULE,$(DEPEND_MODULES),$(shell make --no-print-directory -s -C $(MODULE) show_lib))
 #--------------------------------------
 CPP_FILES = $(wildcard cpp/*.cpp)
+C_FILES = $(wildcard c/*.c)
 CPP_OBJS = $(foreach FILE,$(CPP_FILES:.cpp=.o),tmp/$(FILE))
+C_OBJS = $(foreach FILE,$(C_FILES:.c=.o),tmp/$(FILE))
 CPP_DEPENDS = $(CPP_OBJS:.o=.d)
+C_DEPENDS = $(C_OBJS:.o=.d)
 MAIN_FILES = $(wildcard main/*.cpp)
+MAIN_C_FILES = $(wildcard main/*.c)
 MAIN_OBJS = $(foreach FILE, $(MAIN_FILES:.cpp=.o),tmp/$(FILE))
-MAIN_DEPENDS = $(MAIN_OBJS:.o=.d)
+MAIN_C_OBJS = $(foreach FILE, $(MAIN_C_FILES:.c=.o),tmp/$(FILE))
+MAIN_DEPENDS = $(MAIN_OBJS:.o=.d) 
+MAIN_C_DEPENDS = $(MAIN_C_OBJS:.o=.d)
 MAIN_BINS = $(foreach FILE, $(notdir $(MAIN_FILES:.cpp=.bin)), bin/$(FILE))
-ALL_SRCS = $(CPP_FILES) $(MAIN_FILES)
-ALL_OBJS = $(CPP_OBJS) $(MAIN_OBJS)
-ALL_DEPENDS = $(CPP_DEPENDS) $(MAIN_DEPENDS)
+MAIN_C_BINS = $(foreach FILE, $(notdir $(MAIN_C_FILES:.c=.bin)), bin/$(FILE))
+ALL_SRCS = $(C_FILES) $(CPP_FILES) $(MAIN_C_FILES) $(MAIN_FILES)
+ALL_OBJS = $(C_OBJS) $(CPP_OBJS) $(MAIN_C_OBJS) $(MAIN_OBJS)
+ALL_DEPENDS = $(CPP_DEPENDS) $(C_DEPENDS) $(MAIN_DEPENDS) $(MAIN_C_DEPENDS)
 #--------------------------------------
 LOCAL_LIB=lib/lib$(MODULE).a
 ifeq (,$(CPP_OBJS))
@@ -84,7 +91,7 @@ PACK_SO=$(GCC) -shared -o $@ $^ $(SHARED_LINK_OPTIONS)
 #--------------------------------------
 .PHONY:all lib clean create install test help show_include show_lib $(DEPEND_MODULES)
 #--------------------------------------
-all:$(DEPEND_MODULES) lib $(MAIN_BINS)
+all:$(DEPEND_MODULES) lib $(MAIN_BINS) $(MAIN_C_BINS)
 #       @echo "make complete!!!"
 #--------------------------------------
 $(DEPEND_MODULES):
@@ -92,15 +99,15 @@ $(DEPEND_MODULES):
 #--------------------------------------
 lib:$(LOCAL_LIBS)
 
-$(LOCAL_LIB):$(CPP_OBJS)
+$(LOCAL_LIB):$(CPP_OBJS) $(C_OBJS)
 	mkdir -p lib
 	$(PACK_LIB)
 
-$(LOCAL_SO):$(CPP_OBJS)
+$(LOCAL_SO):$(CPP_OBJS) $(C_OBJS)
 	mkdir -p lib
 	$(PACK_SO)
 #--------------------------------------
-$(MAIN_BINS):bin/%.bin:tmp/main/%.o
+$(MAIN_C_BINS) $(MAIN_BINS):bin/%.bin:tmp/main/%.o
 	mkdir -p bin
 	$(LINK)
 #--------------------------------------
@@ -116,10 +123,8 @@ clean:
 create:
 	mkdir -p include
 	mkdir -p cpp
-	mkdir -p lib
 	mkdir -p main
 	mkdir -p sub
-	mkdir -p bin
 #--------------------------------------
 release:
 	@if [ $(recurse) != 0 ]; then for dir in $(DEPEND_MODULES); do make -C $$dir release install_dir=$(install_dir); done; fi
@@ -175,6 +180,7 @@ DEBUG:
 	echo $(ALL_DEPENDS)
 	echo $(CPP_DEPENDS)
 	echo $(MAIN_DEPENDS)
+	echo "MAINC_BINS=$(MAIN_C_BINS)"
 	echo "resurse=$(recurse)"
 #--------------------------------------
 ###############################################################################

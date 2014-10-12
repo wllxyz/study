@@ -1,0 +1,7 @@
+include makefile.common
+
+#--------------------------------------
+$(ALL_OBJS):tmp/%.o:%.cpp
+	mkdir -p `dirname $@`
+	$(COMPILE)
+#--------------------------------------

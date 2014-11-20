@@ -15,6 +15,7 @@ GCC=c++
 #--------------------------------------
 #here you can set your customer macros defined for compiler
 #DEFINE_OPTION=-DDEBUG
+STATIC_LINK=1
 #--------------------------------------
 #you can add the third part lib's include directories here, lib's developed by yourself should linked in "sub" directory
 INCLUDE_OPTION=

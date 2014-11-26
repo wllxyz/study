@@ -83,7 +83,7 @@ LINK_OPTIONS=$(DEBUG_OPTION) $(EXT_LIB_OPTION) $(GLOBAL_OPTION) $(STATIC_OPTION)
 SHARED_LINK_OPTIONS=$(DEBUG_OPTION) $(DEPEND_LIB_OPTION) $(LIB_OPTION) $(GLOBAL_OPTION)
 #--------------------------------------
 COMPILE=$(GCC) -c -fpic -o $@ $< $(COMPILE_OPTIONS)
-LINK=$(GCC) -o $@ $^ $(LINK_OPTIONS)
+LINK=$(GCC) -o $@ $< $(LINK_OPTIONS)
 PACK_LIB=$(AR) -r $@ $^
 PACK_SO=$(GCC) -shared -o $@ $^ $(SHARED_LINK_OPTIONS)
 #--------------------------------------
@@ -107,7 +107,7 @@ $(LOCAL_SO):$(CPP_OBJS) $(C_OBJS)
 	mkdir -p lib
 	$(PACK_SO)
 #--------------------------------------
-$(MAIN_C_BINS) $(MAIN_BINS):bin/%.bin:tmp/main/%.o
+$(MAIN_C_BINS) $(MAIN_BINS):bin/%.bin:tmp/main/%.o $(LOCAL_LIB)
 	mkdir -p bin
 	$(LINK)
 #--------------------------------------

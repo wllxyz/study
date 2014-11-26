@@ -848,7 +848,7 @@ bool LRParse(const vector<Symbols>& symbols,LanguageTree*& tree,const StateTrans
 			cerr<<"current symbol : "<<symbol<<endl;
 			cerr<<"current state : "<<S<<endl;
 			for(map<Symbols,Actions>::const_iterator i=state_transform_table[S].begin(); i!=state_transform_table[S].end(); ++i)
-				cerr<<"'"<<i->first<<"'"<<" ==> "<<i->second<<endl;
+				cerr << i->first << " ==> " << i->second << endl;
 			cerr<<endl;
 
 			cerr<<"accpeted part:"<<endl;

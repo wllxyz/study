@@ -301,7 +301,7 @@ bool LanguageParsers::LoadLanguage(istream& ins)
 		return false;
 	}
 	this->input_pos = 0;
-	return this->LoadStart(this->languages);
+	return this->LoadStart(this->languages) && this->AnalyzeLanguage();
 }
 
 bool LanguageParsers::LoadLanguage()

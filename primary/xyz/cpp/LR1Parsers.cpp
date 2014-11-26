@@ -66,7 +66,7 @@ bool LR1Parsers::AnalyzeLanguage()
 bool LR1Parsers::Parse()
 {
 	//根据文法预测分析表分析文法,得到文法分析树
-  	return LRParse(this->input_symbols,this->source_tree, this->state_transform_table,this->languages.source_rules.rules);
+  	return this->is_analyzed && LRParse(this->input_symbols,this->source_tree, this->state_transform_table,this->languages.source_rules.rules);
 }
 
 bool LR1Parsers::IsXyzLanguage(const vector<Symbols>& symbols)
@@ -96,7 +96,6 @@ bool LR1Parsers::IsXyzLanguage(const vector<Symbols>& symbols)
 			cerr<<"load data/wll.xyz failed"<<endl;
 			return false;
 		}
-		wll_xyz.AnalyzeLanguage();
 
 		is_wll_xyz_loaded = true;
 	}

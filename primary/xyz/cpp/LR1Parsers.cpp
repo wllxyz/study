@@ -84,18 +84,20 @@ bool LR1Parsers::IsXyzLanguage(const vector<Symbols>& symbols)
 
 	if(is_wll_xyz_loaded == false)
 	{
-		ifstream xll_xyz_grammar_file("conf/wll.xyz");
+		ifstream xll_xyz_grammar_file("data/wll.xyz");
 		if(xll_xyz_grammar_file.fail())
 		{
-			cerr<<"open grammar file conf/wll.xyz failed"<<endl;
+			cerr<<"open grammar file data/wll.xyz failed"<<endl;
 			return false;
 		}
 
 		if( !wll_xyz.LoadLanguage(xll_xyz_grammar_file) )
 		{
-			cerr<<"load conf/wll.xyz failed"<<endl;
+			cerr<<"load data/wll.xyz failed"<<endl;
 			return false;
 		}
+		wll_xyz.AnalyzeLanguage();
+
 		is_wll_xyz_loaded = true;
 	}
 

@@ -28,6 +28,8 @@ public:
 protected:
 	//input stream --> input symbols
 	virtual bool LoadInput(istream& ins);
+	//set symbols as input symbols
+	virtual void SetInput(const vector<Symbols>& symbols);
 	//input symbols --> source parse grammar tree
 	virtual bool Parse()=0;
 	//source parse grammar tree --> destination parse grammar tree --> stand output ostream

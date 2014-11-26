@@ -59,6 +59,11 @@ bool LanguageParsers::LoadInput(istream& ins)
 	return true;
 }
 
+void LanguageParsers::SetInput(const vector<Symbols>& symbols)
+{
+	this->input_symbols = symbols;
+}
+
 bool LanguageParsers::Translate()
 {
 	if(this->destination_tree) 

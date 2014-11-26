@@ -23,7 +23,7 @@
 <expression>--><symbol><spaces><expression>==><expression>--><symbol><expression>;
 <symbol>--><variable>==><symbol>--><variable>$SUB-SYMBOL;
 <symbol>--><constant>==><symbol>--><constant>$SUB-SYMBOL;
-<variable>-->"<"<identifier>">"==><variable>--><identifier>$VARIABLE;
+<variable>-->"<"<identifier>">"==><variable>-->"<"<identifier>">"$VARIABLE;
 <constant>-->"$"<remark>==><constant>-->$REMARK<remark>$CONSTANT;
 <remark>-->"WLL0"==><remark>-->$WLL0;
 <remark>-->"TRANSLATION"==><remark>-->$TRANSLATION;

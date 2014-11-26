@@ -415,7 +415,7 @@ bool LanguageParsers::LoadVariable(Symbols& variable)
 		this->Accept('<') &&
 		this->LoadIdent(ident) &&
 		this->Accept('>') &&
-		(variable = Symbols(ident.c_str()),true);
+		(variable = Symbols(("<"+ident+">").c_str()),true);
 }
 
 bool LanguageParsers::LoadConstant(LanguageExpressions& constant)
@@ -446,7 +446,7 @@ bool LanguageParsers::LoadRemark(Symbols& remark)
 	return
 		this->Accept('$') &&
 		this->LoadIdent(ident) &&
-		(remark = Symbols(REMARK_SYMBOL,ident.c_str()),true);
+		(remark = Symbols(REMARK_SYMBOL,("$"+ident).c_str()),true);
 }
 
 bool LanguageParsers::LoadIdent(string& ident)

@@ -41,7 +41,7 @@ bool TranslateTree(LanguageTree* source,LanguageTree*& dest,const vector<Languag
 bool SelfExplain(const vector<Symbols>& symbols,vector<LanguageTranslations>& languages);
 
 //根据文法自动生成文法预测分析表(供LR1文法分析器重载)
-void GenerateStateTransformTable(const LanguageIndex& languages,vector< vector<TransformEdge> >& state_transform_table);
+void GenerateStateTransformTable(const LanguageIndex& languages,vector< vector<TransformEdge> >& state_transform_table, vector< StateSets<LR1States> >& state_sets);
 
 void Closure(const LanguageIndex& languages, StateSets<LR1States>& I);
 

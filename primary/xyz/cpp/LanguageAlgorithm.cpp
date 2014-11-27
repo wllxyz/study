@@ -460,13 +460,12 @@ bool SelfExplain(const vector<Symbols>& symbols,vector<LanguageTranslations>& la
 //</预测分析表的自动生成算法>
 
 //根据文法自动生成文法预测分析表(供LR1文法分析器重载)
-void GenerateStateTransformTable(const LanguageIndex& languages,vector< vector<TransformEdge> >& state_transform_table)
+void GenerateStateTransformTable(const LanguageIndex& languages,vector< vector<TransformEdge> >& state_transform_table, vector< StateSets<LR1States> >& state_sets)
 {
 	state_transform_table.clear();
+	state_sets.clear();
 
 //<预测分析表的自动生成算法>
-  //已知状态集列表
-	vector< StateSets<LR1States> > state_sets;  	//项目集合列表state_sets
 	stack<int> stack;    							//待处理列表stack
 	StateSets<LR1States> I;     					//当前处理的子项目集合
 
@@ -719,7 +718,7 @@ void Closure(const LanguageIndex& languages, StateSets<LR1States>& I)
 				state.rule = languages.GetRule(*k);
 				DEBUG_LOG("state="<<state);
 //                      若子项目(X->*E,FIRST(CD))不在R中
-				set<LR1States>::iterator j = I.states.find(state);
+				set<LR1States>::iterator j = I.Find(state);
 				if(j==I.states.end())
 				{
 //                          则将子项目(X->*E,FIRST(CD))加入R和s中

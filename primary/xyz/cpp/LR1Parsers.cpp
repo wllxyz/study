@@ -2,12 +2,15 @@
 #include "LanguageAlgorithm.h"
 #include <fstream>
 #include <cctype>
+#include <cassert>
 #include <WllTrace.h>
 using namespace std;
 
 //判定文法是否存在移近规约冲突（文法二义性判断）
-bool LR1Parsers::IsAmbiguous(const vector< vector< TransformEdge > >& state_transform_table)
+bool LR1Parsers::IsAmbiguous(const vector< vector< TransformEdge > >& state_transform_table, const vector< StateSets<LR1States> >& state_sets)
 {
+	assert(state_transform_table.size() == state_sets.size());
+
 	bool flag = false;
 	int n = 0;
 	for(vector< vector< TransformEdge > >::const_iterator i = state_transform_table.begin(); i != state_transform_table.end(); ++i)
@@ -21,13 +24,14 @@ bool LR1Parsers::IsAmbiguous(const vector< vector< TransformEdge > >& state_tran
 			else
 				stat_map[symbol]++;
 		}
-		++n;
+
 		//check & output conflict
 		if(stat_map.size() != i->size())
 		{
 			flag = true;
 			//#ifdef	DEBUG
-			cerr<<"conflict in state transform table (state line = "<<n<<") :"<<endl;
+			cerr<<"conflict in state transform table (state no = "<<n<<") :"<<endl;
+			cerr<<state_sets[n]<<endl;
 
 			for(map<Symbols,int>::iterator it = stat_map.begin(); it != stat_map.end(); ++it)
 			{
@@ -40,10 +44,19 @@ bool LR1Parsers::IsAmbiguous(const vector< vector< TransformEdge > >& state_tran
 							cerr<<*j<<endl;
 						}
 					}
+					for(set<LR1States>::const_iterator k=state_sets[n].states.begin(); k!=state_sets[n].states.end(); ++k)
+					{
+						if(it->first == k->rule->expression.symbols[k->position] || k->IsReduceState() && k->follow.find(it->first)!=k->follow.end())
+						{
+							cerr<<*k<<endl;
+						}
+					}
 				}
 			}
 			//#endif	//DEBUG 
 		}
+
+		++n;
 	}
 	return flag;
 }
@@ -53,8 +66,8 @@ bool LR1Parsers::AnalyzeLanguage()
 	LanguageParsers::AnalyzeLanguage();
   	//根据文法自动生成文法预测分析表
 	vector< vector<TransformEdge> > state_transform_table;
-	GenerateStateTransformTable(this->languages.source_rules,state_transform_table);
-  	if(this->IsAmbiguous(state_transform_table)) return false;
+	GenerateStateTransformTable(this->languages.source_rules,state_transform_table,this->state_sets);
+  	if(this->IsAmbiguous(state_transform_table, this->state_sets)) return false;
 
 	this->state_transform_table.clear();
 	ConvertStateTransformTable(state_transform_table,this->state_transform_table);

@@ -33,6 +33,11 @@ struct States
 		return (this->rule_no<that.rule_no || this->rule_no==that.rule_no && this->position<that.position);
 	}
 
+	bool IsReduceState() const
+	{
+		return this->rule->expression.symbols.size() == this->position;
+	}
+
 	virtual void Display(ostream& o)const
 	{
 	    o<<"(";
@@ -117,6 +122,7 @@ inline ostream& operator<< (ostream& o, const LR1States& s)
 template<typename T>
 struct StateSets
 {
+	typedef typename set<T>::iterator iterator_type;
 	set<T> states;
 
 	//比较函数（匹配函数）
@@ -126,6 +132,14 @@ struct StateSets
 		return equal(this->states.begin(),this->states.end(),that.states.begin());
 	}
 
+	iterator_type Find(const T& data)
+	{
+		for(iterator_type i=this->states.begin(); i!=this->states.end(); ++i)
+		{
+			if(i->rule_no == data.rule_no && i->position == data.position) return i;
+		}
+		return this->states.end();
+	}
 };
 
 inline ostream& operator<<(ostream& o, const StateSets<LR1States>& ss)

@@ -91,8 +91,13 @@ bool LanguageParsers::Process(istream& inf,ostream& outf)
 {
 	if(!this->is_analyzed)
 	{
-		this->AnalyzeLanguage();
-		this->is_analyzed = true;
+		if(this->AnalyzeLanguage())
+			this->is_analyzed = true;
+		else
+		{
+			cerr<<"analyzed language failed"<<endl;
+			return false;
+		}
 	}
 	if(!this->LoadInput(inf)) 
 	{

@@ -182,8 +182,9 @@ int main()
 	//根据文法自动生成文法预测分析表(供LR1文法分析器重载)
 	//void GenerateStateTransformTable(const LanguageIndex& languages,vector< vector<TransformEdge> >& state_transform_table);
 	vector< vector<TransformEdge> > state_transform_table;
+	vector< StateSets<LR1States> > state_sets;
 	StateTransformTable table;
-	GenerateStateTransformTable(lg.source_rules,state_transform_table);
+	GenerateStateTransformTable(lg.source_rules,state_transform_table,state_sets);
 	int state = 0;
 	for(vector<vector<TransformEdge> >::const_iterator i = state_transform_table.begin(); i != state_transform_table.end(); ++i)
 	{
@@ -236,7 +237,7 @@ int main()
 	LoadExpression2(lg);
 	cout<<"Expression2 Language:"<<endl;
 	cout<<lg<<endl;
-	GenerateStateTransformTable(lg.source_rules,state_transform_table);
+	GenerateStateTransformTable(lg.source_rules,state_transform_table,state_sets);
 	ConvertStateTransformTable(state_transform_table, table);
 	cout<<"state_transfrom_table:"<<endl;
 	cout<<table<<endl;
@@ -251,7 +252,7 @@ int main()
 	LoadExpression3(lg);
 	cout<<"Expression3 Language:"<<endl;
 	cout<<lg<<endl;
-	GenerateStateTransformTable(lg.source_rules,state_transform_table);
+	GenerateStateTransformTable(lg.source_rules,state_transform_table,state_sets);
 	ConvertStateTransformTable(state_transform_table, table);
 	cout<<"state_transfrom_table:"<<endl;
 	cout<<table<<endl;

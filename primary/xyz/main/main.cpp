@@ -2,7 +2,7 @@
 #define LR0_PARSER  1
 #define LR1_PARSER  2
 
-#define PARSER  LR1_PARSER
+//#define PARSER  LR1_PARSER
 
 #if PARSER==LR0_PARSER
 #include "LR0Parsers.h"
@@ -57,7 +57,7 @@ int main(int argc,char** argv)
 					cout<<"process file ["<<file_name<<"] failed!"<<endl;
 					continue;
 				}
-				cout<<"[ "<<file_name<<"] loaded."<<endl;
+				cout<<"["<<file_name<<"] loaded."<<endl;
 			}
 			if(cmd=="debug")
 			{

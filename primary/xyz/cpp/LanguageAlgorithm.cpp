@@ -480,7 +480,7 @@ void GenerateStateTransformTable(const LanguageIndex& languages,vector< vector<T
 	vector<size_t> start_rules;
 	languages.GetRuleNosBySymbol(start_symbol, start_rules);
 	for(vector<size_t>::const_iterator i = start_rules.begin(); i != start_rules.end(); ++i)
-		I.states.insert(LR1States(*i,0,symbol_set));
+		I.states.insert(LR1States(languages.GetRule(*i),*i,0,symbol_set));
 //</SLR(1)></UPDATE>
 //          I=CLOSURE(I)
 	Closure(languages,I);
@@ -699,9 +699,9 @@ void Closure(const LanguageIndex& languages, StateSets<LR1States>& I)
 				state.follow=i.follow;
 			}
                     //如果子项目i(A->B*XC,D)中C非空，则用X->E规则规约时的后跟字符集合为FIRST(C)
-	     		else
-	      		{
-	     			DEBUG_LOG("X="<<X<<" is NOT the end symbol of rule="<<*languages.rules[i.rule_no]);
+	     	else
+	      	{
+	     		DEBUG_LOG("X="<<X<<" is NOT the end symbol of rule="<<*languages.rules[i.rule_no]);
 
 				set<Symbols> visited;
 				state.follow.clear();
@@ -710,12 +710,13 @@ void Closure(const LanguageIndex& languages, StateSets<LR1States>& I)
 				{
 					state.follow.insert(i.follow.begin(),i.follow.end()); 
 				}
-	      		}
+	      	}
                     //设置扩展子项目的规则号，并尝试插入
 			for(vector<size_t>::iterator k=rule_no_list.begin(); k != rule_no_list.end(); ++k)
 			{
 //                  <循环>对X中的每一条规则(X->E)
 				state.rule_no = *k;
+				state.rule = languages.GetRule(*k);
 				DEBUG_LOG("state="<<state);
 //                      若子项目(X->*E,FIRST(CD))不在R中
 				set<LR1States>::iterator j = I.states.find(state);

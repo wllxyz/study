@@ -203,7 +203,7 @@ int main()
 	set<Symbols> follow;
 	follow.insert(Symbols::END_SYMBOL);
 	StateSets<LR1States> state_set;
-	state_set.states.insert(LR1States(0,0,follow));
+	state_set.states.insert(LR1States(lg.source_rules.GetRule(0),0,0,follow));
 	Closure(lg.source_rules,state_set);
 	cout<<state_set<<endl;
 	stringstream closure_output;

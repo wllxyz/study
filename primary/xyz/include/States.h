@@ -6,17 +6,20 @@
 #include <algorithm>
 using namespace std;
 #include "LanguageSymbols.h"
+#include "LanguageRules.h"
 
 //状态
 struct States
 {
+	const LanguageRules* rule;		//
 	size_t	rule_no;     //文法规则号
 	size_t	position;     //当前词语的位置(0-length)
 
 	//默认构造函数
-	States(){ this->rule_no=0; size_t position=0; }
-	States(size_t rule_no, size_t position)
+	States(){ this->rule = NULL; this->rule_no=0; size_t position=0; }
+	States(const LanguageRules* rule, size_t rule_no, size_t position)
 	{
+		this->rule = rule;
 		this->rule_no = rule_no;
 		this->position = position;
 	}
@@ -36,6 +39,17 @@ struct States
 	    o<<this->rule_no;
 	    o<<",";
 	    o<<this->position;
+	    o<<",";
+	    o<<this->rule->symbol;
+	    o<<"-->";
+	    size_t i=0;
+	    for(vector<Symbols>::const_iterator j = this->rule->expression.symbols.begin(); j!=this->rule->expression.symbols.end(); ++j)
+	    {
+	    	if(i==this->position) o<<"*";
+	    	o<<*j;
+	    	++i;
+	    }
+	    if(i==this->position) o<<"*";
 	    o<<")";
 	}
 };//状态
@@ -53,9 +67,10 @@ struct LR1States: public States
 	mutable set<Symbols> follow;   //后跟终结符号的集合(引入集合数据结构?还是直接用有序线性表来实现?)
 
 	LR1States(){}
-	LR1States(size_t rule_no, size_t position, set<Symbols>& follow):States(rule_no,position)
+	LR1States(const LanguageRules* rule, size_t rule_no, size_t position, set<Symbols>& that_follow):
+		States(rule,rule_no,position),
+		follow(that_follow)
 	{
-		this->follow = follow;
 	}
 
 	//比较函数(顺序表搜索接口)
@@ -85,7 +100,7 @@ struct LR1States: public States
 		{
 			o<<*i;
 		}
-	    	o<<")";
+	    o<<")";
 		o<<")";
 	}
 };//end of LR1States

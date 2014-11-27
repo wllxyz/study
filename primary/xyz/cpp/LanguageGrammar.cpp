@@ -1,6 +1,6 @@
 #include "LanguageGrammar.h"
 
-bool LanguageIndex::GetRulesBySymbol(Symbols symbol, vector<LanguageRules*>& rules) const
+bool LanguageIndex::GetRulesBySymbol(const Symbols symbol, vector<LanguageRules*>& rules) const
 {
 	rules.clear();
 	pair< multimap<Symbols,size_t>::const_iterator, multimap<Symbols,size_t>::const_iterator > ret;
@@ -12,7 +12,7 @@ bool LanguageIndex::GetRulesBySymbol(Symbols symbol, vector<LanguageRules*>& rul
 	return !rules.empty();
 }
 
-bool LanguageIndex::GetRuleNosBySymbol(Symbols symbol, vector<size_t>& rules) const
+bool LanguageIndex::GetRuleNosBySymbol(const Symbols symbol, vector<size_t>& rules) const
 {
 	rules.clear();
 	pair< multimap<Symbols,size_t>::const_iterator, multimap<Symbols,size_t>::const_iterator > ret;
@@ -22,6 +22,13 @@ bool LanguageIndex::GetRuleNosBySymbol(Symbols symbol, vector<size_t>& rules) co
 		rules.push_back(it->second);
 	}
 	return !rules.empty();
+}
+
+const LanguageRules* LanguageIndex::GetRule(size_t rule_no) const
+{
+	if(rule_no >= this->rules.size()) return NULL;
+
+	return this->rules[rule_no];
 }
 
 void LanguageGrammar::Initialize()

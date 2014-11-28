@@ -109,7 +109,7 @@ bool LanguageParsers::Process(istream& inf,ostream& outf)
 		cerr<<"ParseAndTranslate failed"<<endl;
 		return false;
 	}
-	if(this->IsXyzLanguage(this->output_symbols))
+	if(LanguageParsers::IsXyzLanguage(this->output_symbols))
 	{	
 		if(!SelfExplain(this->output_symbols,this->languages.translation_rules))
 		{

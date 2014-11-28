@@ -9,3 +9,10 @@ current issue:
 6. 函数/基本类型和数据结构的引入
 7. 自动优化自动机
 
+===============================================
+1. auto link (function or pipe?) 
+eg. echo "3+4" | wll add.xyz - | wll counter.xyz -
+
+2. check grammar split from IsXYZLanguage
+
+ 

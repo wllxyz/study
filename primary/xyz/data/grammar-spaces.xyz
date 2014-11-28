@@ -42,7 +42,7 @@
 <letter_digit_string>--><digit>==><letter_digit_string>--><digit>;
 <letter_digit_string>--><letter><letter_digit_string>==><letter_digit_string>--><letter><letter_digit_string>;
 <letter_digit_string>--><digit><letter_digit_string>==><letter_digit_string>--><digit><letter_digit_string>;
-<constant>-->"\""<string>"\""==><constant>--><string>$CONSTANT;
+<constant>-->"\""<string>"\""==><constant>-->$CONSTANT<string>$CONSTANT;
 <string>--><character>==><string>--><character>;
 <string>--><character><string>==><string>--><character><string>;
 <character>--><letter>==><character>--><letter>;

@@ -15,7 +15,7 @@
 <symbol>-->$REMARK<remark>$SUB_SYMBOL==><symbol>-->$REMARK<remark>$SUB_SYMBOL;
 
 <variable>-->"<"<identifier>">"$VARIABLE==><variable>-->"<"<identifier>">"$VARIABLE;
-<constant>--><string>$CONSTANT==><constant>--><string>$CONSTANT;
+<constant>-->$CONSTANT<string>$CONSTANT==><constant>-->$CONSTANT<string>$CONSTANT;
 
 <remark>-->$WLL0==><remark>-->$WLL0;
 <remark>-->$TRANSLATION==><remark>-->$TRANSLATION;

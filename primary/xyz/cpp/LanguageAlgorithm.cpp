@@ -345,12 +345,15 @@ bool SelfExplain(const vector<Symbols>& symbols,vector<LanguageTranslations>& la
 		}
 		if(symbol == Symbols::REMARK_CONSTANT)
 		{
+			//string1$CONSTANTstring2$CONSTANT...stringN$CONSTANT$SUB_SYMBOL, only the last CONSTANT effect
+			//we use this feather to make $CONSTANTstring$CONSTANT the same effect as string$CONSTANT, but the leading $CONSTANT can distinguish the constant and variable
 			sub_expression = LanguageExpressions(symbol_string.c_str());
 			symbol_string.clear();
 			continue;
 		}
 		if(symbol == Symbols::REMARK_VARIABLE)
 		{
+			//<variable1>$VARIABLE<variable2>$VARIABLE...<variableN>$VARIABLE$SUB_SYMBOL, only the last VARIABLE effect
 			variable = Symbols(symbol_string.c_str());
 			sub_expression = LanguageExpressions(variable);
 			symbol_string.clear();
@@ -358,6 +361,7 @@ bool SelfExplain(const vector<Symbols>& symbols,vector<LanguageTranslations>& la
 		}
 		if(symbol == Symbols::REMARK_SUB_SYMBOL)
 		{
+			//<variable1>$VARIABLE<variable2>$VARIABLE...<stringN>$CONSTANT$SUB_SYMBOL, only the last VARIABLE or CONSTANT SUB_SYMBOL effect
 			expression += sub_expression;
 			continue;
 		}

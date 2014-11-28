@@ -120,3 +120,18 @@ bool LR1Parsers::IsXyzLanguage(const vector<Symbols>& symbols)
 #endif	//LR1WLLXYZ
 }
 
+void LR1Parsers::DisplayStates()
+{
+	int n = 0;
+	for(vector< StateSets<LR1States> >::const_iterator i = this->state_sets.begin(); i != this->state_sets.end(); ++i)
+	{
+		cout<<"State "<<n<<" : "<<*i<<endl;
+		++n;
+	}
+}
+
+void LR1Parsers::DisplayLanguage()
+{
+	LanguageParsers::DisplayLanguage();
+	this->DisplayStates();
+}

@@ -24,7 +24,7 @@ public:
 	//input istream --> output ostream
 	virtual bool Process(istream& inf,ostream& outf);
 	//for debug display languages
-	void DisplayLanguage();
+	virtual void DisplayLanguage();
 protected:
 	//input stream --> input symbols
 	virtual bool LoadInput(istream& ins);

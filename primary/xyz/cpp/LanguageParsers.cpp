@@ -303,10 +303,23 @@ bool LanguageParsers::LoadLanguage(istream& ins)
 {
 	if(!this->LoadInput(ins))
 	{
+		cerr<<"load input failed"<<endl;
 		return false;
 	}
 	this->input_pos = 0;
-	return this->LoadStart(this->languages) && this->AnalyzeLanguage();
+
+	if(!this->LoadStart(this->languages))
+	{
+		cerr<<"LL(1) parser load language failed"<<endl;
+		return false;
+	}
+	if(!this->AnalyzeLanguage())
+	{
+		cerr<<"analyze language failed"<<endl;
+		return false;
+	}
+	this->is_analyzed = true;
+	return true;
 }
 
 bool LanguageParsers::LoadLanguage()
@@ -700,4 +713,3 @@ void LanguageParsers::DisplayLanguage()
 {
 	cout<<this->languages<<endl;
 }
-

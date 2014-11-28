@@ -880,7 +880,7 @@ bool LRParse(const vector<Symbols>& symbols,LanguageTree*& tree,const StateTrans
 			state_stack.push(action.value);
 			DEBUG_LOG("state ["<<action.value<<"] is pushed into state stack");
 			//对于规约的非终结符号移进，已经读取的输入终结符号保留
-			if(symbol.IsConstant())		//??? IF SYMBOL IS REMARK,WILL IT BE MOVED ON ? OR REMARK IS ONLY EXPLAINED ???
+			if(!symbol.IsVariable())		//we accept constant and remark(for self explain grammar wll.xyz check) now.(except variable)
 			{
 				//生成语法节点
 				symbol_node = new LanguageTree();

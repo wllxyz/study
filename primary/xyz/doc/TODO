@@ -1,7 +1,7 @@
 current issue: 
-1. fix wll.xyz grammar conflict
+1. fix wll.xyz grammar conflict [done]
 
-1. add ""(null const) support [have to check old solution, known the resolution] [fixed first set empty issue : cause by || short cut]
+1. add ""(null const) support [have to check old solution, known the resolution] [fixed first set empty issue : cause by || short cut] [done]
 2. 解决语义二义性冲突问题（优先策略[先定义的规则优先规约]和冲突检测）[partly done]【引入动态迁移状态自顶向下分析算法解决移进规约冲突】
 3. 解决出错定位问题 [done]
 4. 引入语法自动机的连接组合机制
